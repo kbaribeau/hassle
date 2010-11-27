@@ -24,20 +24,22 @@ EOF
   File.join(@hassle.css_location(location), "#{css_file}.css") if @hassle
 end
 
-def be_compiled
-  simple_matcher("exist") { |given| File.exists?(given) }
-  simple_matcher("contain compiled sass") { |given| File.read(given) =~ /h1 \{/ }
+Spec::Matchers.define :be_compiled do
+	match do |given|
+		File.exists?(given) && File.read(given) =~ /h1 \{/
+	end
 end
 
-def have_tmp_dir_removed(*stylesheets)
-  simple_matcher("remove tmp dir") do |given|
+Spec::Matchers.define :have_tmp_dir_removed do |stylesheets|
+	match do |given|
     given == stylesheets.map { |css| css.gsub(File.join(Dir.pwd, "tmp", "hassle"), "") }
-  end
+	end
 end
 
-def have_served_sass
-  simple_matcher("return success") { |given| given.status == 200 }
-  simple_matcher("compiled sass") { |given| given.body.should =~ /h1 \{/ }
+Spec::Matchers.define :have_served_sass do
+	match do |last_response|
+		last_response.status == 200 && last_response.body.should =~ /h1 \{/ 
+	end
 end
 
 def reset
