@@ -10,7 +10,7 @@ SASS_OPTIONS = Sass::Plugin.options.dup
 
 def write_sass(location, css_file = "screen")
   FileUtils.mkdir_p(location)
-  sass_path = File.join(location, "#{css_file}.sass")
+  sass_path = File.join(location, "#{css_file}.scss")
 
   File.open(sass_path, "w") do |f|
     f.write <<EOF
