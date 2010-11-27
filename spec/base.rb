@@ -6,7 +6,6 @@ require 'active_support/core_ext/numeric/time'
 require 'sass'
 require 'sass/plugin'
 require File.dirname(__FILE__) + '/../lib/hassle'
-puts 1.hour
 SASS_OPTIONS = Sass::Plugin.options.dup
 
 def write_sass(location, css_file = "screen")
